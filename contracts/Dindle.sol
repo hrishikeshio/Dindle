@@ -1,4 +1,4 @@
-import "ConvertLib.sol";
+//import "ConvertLib.sol";
 
 contract Dindle{
  	address contractOwner = msg.sender;
@@ -14,62 +14,62 @@ contract Dindle{
 		uint serial;
 		string bookName;
 		string authorName;
-		string image;
+		string imageURL;
 		ufixed0x256 price;
 		ufixed0x256 resellPrice;
 		ufixed0x256 resellCommission;
-		address[] owner;
+		mapping (uint => Owner) owners;
+		uint numOwners;
 	}
 
 	struct Owner{
-		address addr;
-		string name;
-		ufixed stake;
+		string ownerName;
+		address ownerAddress;
+		ufixed0x256 stake;
 	}
 
 	struct Licensee{
-		address addr;
-		string name;
+		string licenseeName;
+		address licenseeAddress;
 	}
 
 
-	function Dindle (ufixed0x256 platformCommission) noether public returns (bool _success) {
+	function Dindle (ufixed0x256 platformCommission) noether  {
 		uint totalBooks=0;
-		ufixed0x256 platformCommission;
+		//platformCommission;
 	}
 
 	function register (	
 		string bookName,
 		string authorName,
-		string image,
+		string imageURL,
 		ufixed0x256 price,
 		ufixed0x256 resellPrice,
 		ufixed0x256 resellCommission,
-		address[] owner
+		string ownerName,
+		ufixed0x256 stake
 		) noether public returns (uint bookID)
 	{
-		
-		if(ownership[identity].addr!=0)
-		{
-		    throw;
-		}
 		bookID=numBooks++;
-		books[bookID]=Book(0,bookName,)
-		//ownership[identity]=bookOwner(msg.sender);	
+		books[bookID]=Book(0,bookName,authorName, imageURL, price, resellPrice, resellCommission,0);
+		Book b = books[bookID];	
+// 		ufixed0x256 stake=100.0;
+		b.owners[0]=Owner(ownerName,msg.sender,stake);
+		b.numOwners=1;
 	}
 	
-	function transfer(bytes32 identity,address reciever) noether public returns (bool _success)
-	{   
-	    if(ownership[identity].addr!=msg.sender)
-	    {
-	        throw;
-	    }
-	    ownership[identity]=bookOwner(reciever);
-	}
+	// function transfer(bytes32 identity,address reciever) noether public returns (bool _success)
+	// {   
+	//     if(ownership[identity].addr!=msg.sender)
+	//     {
+	//         throw;
+	//     }
+	//     ownership[identity]=bookOwner(reciever);
+	// }
 
-	function checkOwnership(bytes32 identity) constant returns (address) 
-	{
-		return ownership[identity].addr;
-	}
+	// function checkOwnership(bytes32 identity) constant returns (address) 
+	// {
+	// 	return ownership[identity].addr;
+	// }
 
 }
